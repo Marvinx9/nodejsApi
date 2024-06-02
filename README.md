@@ -1,1 +1,1 @@
-config iniciais
+config initial
