@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "lint": "eslint . --ext .ts"
+    "test": "jest"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -29,11 +26,5 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "prettier": "^3.3.0"
-  },
-    "husky": {
-      "hooks": {
-        "pre-commit": "lint-staged",
-        "...": "..."
-      }
   }
 }
