@@ -1,7 +1,14 @@
-import { AccountModel } from '../../domain/models/account';
-import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account';
-import { InvalidParamError, MissingParamError, ServerError } from '../errors';
-import { EmailValidator } from '../protocols';
+import {
+  InvalidParamError,
+  MissingParamError,
+  ServerError,
+} from '../../errors';
+import {
+  EmailValidator,
+  AddAccount,
+  AddAccountModel,
+  AccountModel,
+} from '../signup/signup-protocols';
 import { SignUpController } from './signup';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -156,6 +163,24 @@ describe('SignUp Controller', () => {
   it('Should return 500 if EmailValidator throws', () => {
     const { sut, emailValidatorStub } = makeSut();
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementation(() => {
+      throw new Error();
+    });
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password',
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
+  });
+
+  it('Should return 500 if AddAccount throws', () => {
+    const { sut, addAccountStub } = makeSut();
+    jest.spyOn(addAccountStub, 'add').mockImplementation(() => {
       throw new Error();
     });
     const httpRequest = {
