@@ -3,4 +3,5 @@ import setupMiddlewares from './middlewares';
 
 const app = express();
 setupMiddlewares(app);
+
 export default app;
