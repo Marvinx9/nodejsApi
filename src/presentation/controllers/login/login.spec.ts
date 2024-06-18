@@ -1,12 +1,11 @@
-import { Authentication } from '../../../domain/usecases/authentication';
+import { EmailValidator, HttpRequest, Authentication } from './login-protocols';
 import { InvalidParamError, MissingParamError } from '../../errors';
+import { LoginController } from './login';
 import {
   badRequest,
   serverError,
   unauthorized,
 } from '../../helpers/http-helper';
-import { EmailValidator, HttpRequest } from '../signup/signup-protocols';
-import { LoginController } from './login';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
