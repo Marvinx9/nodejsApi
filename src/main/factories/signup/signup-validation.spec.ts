@@ -1,12 +1,12 @@
-import { CompareFieldsValidation } from '../../presentation/helpers/validators/compare-fields-validation';
-import { EmailValidation } from '../../presentation/helpers/validators/email-validation';
-import { RequiredFieldValidation } from '../../presentation/helpers/validators/required-field-validation';
-import { Validation } from '../../presentation/helpers/validators/validation';
-import { ValidationComposite } from '../../presentation/helpers/validators/validation-composite';
-import { EmailValidator } from '../../presentation/protocols/email-validator';
+import { CompareFieldsValidation } from '../../../presentation/helpers/validators/compare-fields-validation';
+import { EmailValidation } from '../../../presentation/helpers/validators/email-validation';
+import { RequiredFieldValidation } from '../../../presentation/helpers/validators/required-field-validation';
+import { Validation } from '../../../presentation/helpers/validators/validation';
+import { ValidationComposite } from '../../../presentation/helpers/validators/validation-composite';
+import { EmailValidator } from '../../../presentation/protocols/email-validator';
 import { makeSignupValidation } from './signup-validation';
 /* eslint-disable @typescript-eslint/no-unused-vars */
-jest.mock('../../presentation/helpers/validators/validation-composite');
+jest.mock('../../../presentation/helpers/validators/validation-composite');
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -28,6 +28,7 @@ describe('SignUpValidation Factory', () => {
       new CompareFieldsValidation('password', 'passwordConfirmation'),
     );
     validations.push(new EmailValidation('email', makeEmailValidator()));
+
     expect(ValidationComposite).toHaveBeenCalledWith(validations);
   });
 });
