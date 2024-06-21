@@ -48,7 +48,6 @@ describe('Email Validation', () => {
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementation(() => {
       throw new Error();
     });
-    const stack = 'stack-erro';
     expect(sut.validate).toThrow();
   });
 });
