@@ -6,7 +6,7 @@ import {
   serverError,
   unauthorized,
   ok,
-} from '../../helpers/http-helper';
+} from '../../helpers/http/http-helper';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
