@@ -1,5 +1,5 @@
 import { AuthenticationModel } from '../../../domain/usecases/authentication';
-import { LoadAccountByEmailRepository } from '../../protocols/load-account-by-email-repository';
+import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository';
 import { AccountModel } from '../add-account/db-add-account-protocols';
 import { DbAuthentication } from './db-authentication';
 
@@ -58,5 +58,14 @@ describe('DbAuthentication UseCase', () => {
       );
     const promise = sut.auth(makFakeAuthentication());
     await expect(promise).rejects.toThrow();
+  });
+
+  it('Should return null if LoadAccountByEmailRepository returns null', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut();
+    jest
+      .spyOn(loadAccountByEmailRepositoryStub, 'load')
+      .mockReturnValueOnce(null);
+    const accessToken = await sut.auth(makFakeAuthentication());
+    expect(accessToken).toBeNull();
   });
 });
