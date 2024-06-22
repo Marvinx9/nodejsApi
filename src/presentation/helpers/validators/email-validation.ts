@@ -1,6 +1,6 @@
 import { InvalidParamError } from '../../errors';
 import { EmailValidator } from '../../protocols/email-validator';
-import { Validation } from './validation';
+import { Validation } from '../../protocols/validation';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class EmailValidation implements Validation {

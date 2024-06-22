@@ -1,5 +1,5 @@
 import { InvalidParamError } from '../../errors';
-import { Validation } from './validation';
+import { Validation } from '../../protocols/validation';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class CompareFieldsValidation implements Validation {
