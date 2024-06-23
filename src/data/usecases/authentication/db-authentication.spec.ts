@@ -132,4 +132,10 @@ describe('DbAuthentication UseCase', () => {
     await sut.auth(makFakeAuthentication());
     expect(generateSpy).toHaveBeenCalledWith('any_id');
   });
+
+  it('Should call TokenGenerator with correct id', async () => {
+    const { sut } = makeSut();
+    const accesToken = await sut.auth(makFakeAuthentication());
+    expect(accesToken).toBe('any_token');
+  });
 });
