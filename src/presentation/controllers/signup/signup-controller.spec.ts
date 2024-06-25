@@ -6,8 +6,8 @@ import {
   AccountModel,
   HttpRequest,
   Validation,
-} from '../signup/signup-protocols';
-import { SignUpController } from './signup';
+} from './signup-controller-protocols';
+import { SignUpController } from './signup-controller';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */

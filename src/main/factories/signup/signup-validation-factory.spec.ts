@@ -6,7 +6,7 @@ import {
 } from '../../../presentation/helpers/validators';
 import { Validation } from '../../../presentation/protocols/validation';
 import { EmailValidator } from '../../../presentation/protocols/email-validator';
-import { makeSignupValidation } from './signup-validation';
+import { makeSignupValidation } from './signup-validation-factory';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 jest.mock('../../../presentation/helpers/validators/validation-composite');
 
