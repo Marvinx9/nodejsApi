@@ -49,5 +49,15 @@ describe('Login Routes', () => {
         })
         .expect(200);
     });
+
+    it('Should return 401 on login', async () => {
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: 'afraniodantas@gmail.com',
+          password: '123',
+        })
+        .expect(401);
+    });
   });
 });
