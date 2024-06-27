@@ -54,5 +54,8 @@
     "@types/mongodb": {
       "@types/bson": "4.0.5"
     }
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
