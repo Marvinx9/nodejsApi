@@ -1,10 +1,14 @@
-import { EmailInUseError, MissingParamError, ServerError } from '../../errors';
+import {
+  EmailInUseError,
+  MissingParamError,
+  ServerError,
+} from '../../../errors';
 import {
   ok,
   serverError,
   badRequest,
   forbidden,
-} from '../../helpers/http/http-helper';
+} from '../../../helpers/http/http-helper';
 import {
   AddAccount,
   AddAccountModel,

@@ -4,14 +4,14 @@ import {
   HttpRequest,
   Validation,
 } from './login-controller-protocols';
-import { MissingParamError } from '../../errors';
+import { MissingParamError } from '../../../errors';
 import { LoginController } from './login-controller';
 import {
   badRequest,
   serverError,
   unauthorized,
   ok,
-} from '../../helpers/http/http-helper';
+} from '../../../helpers/http/http-helper';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
