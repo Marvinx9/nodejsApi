@@ -1,4 +1,4 @@
-import { Validation } from '../../protocols/validation';
+import { Validation } from '../../presentation/protocols/validation';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class ValidationComposite implements Validation {
