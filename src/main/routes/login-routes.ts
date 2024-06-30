@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { adaptRoute } from '../adapters/express/express-route-adapter';
-import { makeSignupController } from '../factories/signup/signup';
-import { makeLoginController } from '../factories/login/login-factory';
+import { makeSignupController } from '../factories/controllers/signup/signup-controller-factory';
+import { makeLoginController } from '../factories/controllers/login/login-controller-factory';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
