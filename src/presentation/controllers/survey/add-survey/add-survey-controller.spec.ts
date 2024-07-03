@@ -5,7 +5,11 @@ import {
   Validation,
 } from './add-survey-controller-protocols';
 import { AddSurveyController } from './add-survey-controller';
-import { badRequest } from '../../../helpers/http/http-helper';
+import {
+  badRequest,
+  noContent,
+  serverError,
+} from '../../../helpers/http/http-helper';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -79,5 +83,22 @@ describe('AddSurvey Controller', () => {
     const httpRequest = makeFakeRequest();
     await sut.handle(httpRequest);
     expect(addSpy).toHaveBeenCalledWith(httpRequest.body);
+  });
+
+  it('Should return 500 if AddSurvey throws', async () => {
+    const { sut, addSurveyStub } = makeSut();
+    jest
+      .spyOn(addSurveyStub, 'add')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      );
+    const httpRequest = await sut.handle(makeFakeRequest());
+    expect(httpRequest).toEqual(serverError(new Error()));
+  });
+
+  it('Should return 204 on success', async () => {
+    const { sut } = makeSut();
+    const httpRequest = await sut.handle(makeFakeRequest());
+    expect(httpRequest).toEqual(noContent());
   });
 });
