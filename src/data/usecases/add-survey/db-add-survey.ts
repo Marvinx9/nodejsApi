@@ -1,7 +1,12 @@
-import { AddSurvey, AddSurveyModel } from '../../../domain/usecases/add-survey';
+import {
+  AddSurvey,
+  AddSurveyModel,
+  AddSurveyRepository,
+} from './db-add-survey-protocols';
 
 export class DbAddSurvey implements AddSurvey {
+  constructor(private readonly addSurveyRepository: AddSurveyRepository) {}
   async add(data: AddSurveyModel): Promise<void> {
-    return null;
+    await this.addSurveyRepository.add(data);
   }
 }
