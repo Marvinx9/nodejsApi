@@ -2,14 +2,13 @@ import request from 'supertest';
 import app from '../config/app';
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper';
 import { Collection } from 'mongodb';
-import { AddSurveyModel } from '../../domain/usecases/add-survey';
 import { sign } from 'jsonwebtoken';
 import env from '../config/env';
 
 let surveyCollection: Collection;
 let accountCollection: Collection;
 
-const makeSurveyData = (): AddSurveyModel => ({
+const makeSurveyData = () => ({
   question: 'question',
   answers: [
     {
