@@ -29,17 +29,40 @@ const makeFakeSurveys = (): SurveyModel[] => {
   ];
 };
 
-describe('DbLoadSurveys', () => {
+interface SutTypes {
+  sut: DbLoadSurveys;
+  loadSurveysRepositoryStub: LoadSurveysRepository;
+}
+
+const makeSurveysRepository = (): LoadSurveysRepository => {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
     loadAll(): Promise<SurveyModel[]> {
       return new Promise((resolve) => resolve(makeFakeSurveys()));
     }
   }
+  return new LoadSurveysRepositoryStub();
+};
+
+const makeSut = (): SutTypes => {
+  const loadSurveysRepositoryStub = makeSurveysRepository();
+  const sut = new DbLoadSurveys(loadSurveysRepositoryStub);
+  return {
+    sut,
+    loadSurveysRepositoryStub,
+  };
+};
+
+describe('DbLoadSurveys', () => {
   it('Should call LoadSurveysRepository', async () => {
-    const loadSurveysRepositoryStub = new LoadSurveysRepositoryStub();
+    const { sut, loadSurveysRepositoryStub } = makeSut();
     const loadAllSpy = jest.spyOn(loadSurveysRepositoryStub, 'loadAll');
-    const sut = new DbLoadSurveys(loadSurveysRepositoryStub);
     await sut.load();
     expect(loadAllSpy).toHaveBeenCalled();
+  });
+
+  it('Should return a list of Surveys on success', async () => {
+    const { sut } = makeSut();
+    const surveys = await sut.load();
+    expect(surveys).toEqual(makeFakeSurveys());
   });
 });
