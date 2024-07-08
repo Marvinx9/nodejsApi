@@ -25,6 +25,7 @@ export class AuthMiddleware implements Middleware {
           return ok({ accountId: account.id });
         }
       }
+
       return forbidden(new AccessDeniedError());
     } catch (error) {
       return serverError(error);
