@@ -57,6 +57,7 @@ describe('LoadSurveys Controller', () => {
   afterAll(() => {
     MockDate.reset();
   });
+
   it('Should call LoadSurveys', async () => {
     const { sut, loadSurveysStub } = makeSut();
     const loadSpy = jest.spyOn(loadSurveysStub, 'load');
