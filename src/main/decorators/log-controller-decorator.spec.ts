@@ -48,11 +48,11 @@ const makeFakeServerError = (): HttpResponse => {
   fakeError.stack = 'any_stack';
   return serverError(fakeError);
 };
-interface sutType {
+type sutType = {
   sut: LogControllerDecorator;
   logErrorRepositoryStub: LogErrorRepository;
   controllerStub: Controller;
-}
+};
 
 const makeSut = (): sutType => {
   const controllerStub = makeController();

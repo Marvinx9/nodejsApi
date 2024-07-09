@@ -31,10 +31,10 @@ const makeLoadAccountByToken = (): LoadAccountByToken => {
   return new LoadAccountByTokenStub();
 };
 
-interface TypeSut {
+type TypeSut = {
   sut: AuthMiddleware;
   loadAccountByTokenStub: LoadAccountByToken;
-}
+};
 
 const makeSut = (role?: string): TypeSut => {
   const loadAccountByTokenStub = makeLoadAccountByToken();

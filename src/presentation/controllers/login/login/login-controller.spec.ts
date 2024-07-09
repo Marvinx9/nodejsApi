@@ -33,11 +33,11 @@ const makeValidation = (): Validation => {
   }
   return new ValidationStub();
 };
-interface TypeSut {
+type TypeSut = {
   sut: LoginController;
   authenticationStub: Authentication;
   validationStub: Validation;
-}
+};
 
 const makeSut = (): TypeSut => {
   const authenticationStub = makeAuthentication();

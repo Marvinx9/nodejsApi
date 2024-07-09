@@ -4,10 +4,10 @@ import { ValidationComposite } from './validation-composite';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-interface SutTypes {
+type SutTypes = {
   sut: ValidationComposite;
   validationStubs: Validation[];
-}
+};
 
 const makeValidation = (): Validation => {
   class validationStubs implements Validation {
