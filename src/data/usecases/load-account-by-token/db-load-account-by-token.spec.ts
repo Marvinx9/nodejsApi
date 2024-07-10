@@ -1,7 +1,9 @@
-import { Decrypter } from '../../protocols/criptography/decrypter';
-import { AccountModel } from '../add-account/db-add-account-protocols';
 import { DbLoadAccountByToken } from './db-load-account-by-token';
-import { LoadAccountByTokenRepository } from '../../../data/protocols/db/account/load-account-by-token-repository';
+import {
+  Decrypter,
+  AccountModel,
+  LoadAccountByTokenRepository,
+} from './db-load-account-by-token-protocols';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 const makeFakeAccount = (): AccountModel => ({
