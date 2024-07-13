@@ -8,7 +8,6 @@ import { MongoHelper } from '../helpers/mongo-helper';
 export class SurveyMongoRepository
   implements AddSurveyRepository, LoadSurveysRepository, LoadSurveyById
 {
-
   async add(surveyData: AddSurveyModel): Promise<void> {
     const surveyCollection = await MongoHelper.getCollection('surveys');
     await surveyCollection.insertOne(surveyData);
@@ -20,9 +19,9 @@ export class SurveyMongoRepository
     return surveys;
   }
 
-  async  loadById(id: string): Promise<SurveyModel | null> {
-    const surveyCollection = await MongoHelper.getCollection('surveys')
-    const survey = await surveyCollection.findOne({_id: id})
+  async loadById(id: string): Promise<SurveyModel | null> {
+    const surveyCollection = await MongoHelper.getCollection('surveys');
+    const survey = await surveyCollection.findOne({ _id: id });
     return survey;
   }
 }

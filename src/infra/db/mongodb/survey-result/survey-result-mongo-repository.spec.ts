@@ -1,13 +1,13 @@
 import { Collection } from 'mongodb';
 import { MongoHelper } from '../helpers/mongo-helper';
-import { SurveyModel } from '../../../../domain/models/survey'
-import {AccountModel} from '../../../../domain/models/account';
-import {SurveyResultMongoRepository} from './survey-result-mongo-repository'
+import { SurveyModel } from '../../../../domain/models/survey';
+import { AccountModel } from '../../../../domain/models/account';
+import { SurveyResultMongoRepository } from './survey-result-mongo-repository';
 
 let surveyCollection: Collection;
 let surveyResultCollection: Collection;
 let accountCollection: Collection;
-''
+
 const makeSurvey = async (): Promise<SurveyModel> => {
   const res = await surveyCollection.insertOne({
     question: 'any_question',
@@ -21,18 +21,18 @@ const makeSurvey = async (): Promise<SurveyModel> => {
       },
     ],
     date: new Date(),
-  })
-  return res.ops[0]
-}
+  });
+  return res.ops[0];
+};
 
 const makeAccount = async (): Promise<AccountModel> => {
   const res = await accountCollection.insertOne({
     name: 'any_name',
     email: 'any_email',
-    password: 'any_password'
-  })
-  return res.ops[0]
-}
+    password: 'any_password',
+  });
+  return res.ops[0];
+};
 
 const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository();
@@ -65,11 +65,11 @@ describe('Survey Mongo Repository', () => {
         surveyId: survey.id,
         accountId: account.id,
         answer: survey.answers[0].answer,
-        date: new Date()
+        date: new Date(),
       });
       expect(surveyResult).toBeTruthy();
       expect(surveyResult.id).toBeTruthy();
       expect(surveyResult.answer).toBe(survey.answers[0].answer);
     });
-  })
-})
+  });
+});
