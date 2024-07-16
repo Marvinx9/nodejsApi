@@ -72,7 +72,7 @@ describe('Survey Mongo Repository', () => {
       expect(surveyResult.answer).toBe(survey.answers[0].answer);
     });
 
-    it('Should update a survey result if its not new', async () => {
+    it('Should update survey result if its not new', async () => {
       const survey = await makeSurvey();
       const account = await makeAccount();
       const res = await surveyResultCollection.insertOne({
