@@ -11,11 +11,11 @@ import {
 } from '../../../helpers/http/http-helper';
 import {
   AddAccount,
-  AddAccountModel,
+  AddAccountParams,
   AccountModel,
   HttpRequest,
   Validation,
-  AuthenticationModel,
+  AuthenticationParams,
   Authentication,
 } from './signup-controller-protocols';
 import { SignUpController } from './signup-controller';
@@ -25,7 +25,7 @@ import { SignUpController } from './signup-controller';
 
 const makeaddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add(account: AddAccountModel): Promise<AccountModel> {
+    async add(account: AddAccountParams): Promise<AccountModel> {
       return new Promise((resolve) => resolve(makeFakeAccount()));
     }
   }
@@ -34,7 +34,7 @@ const makeaddAccount = (): AddAccount => {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationModel): Promise<string> {
+    async auth(authentication: AuthenticationParams): Promise<string> {
       return new Promise((resolve) => resolve('any_token'));
     }
   }
