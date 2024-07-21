@@ -78,6 +78,13 @@ describe('Survey Mongo Repository', () => {
       expect(surveyResult).toBeTruthy();
     });
 
+    it('Should return null if there is no survey result', async () => {
+      const survey = await makeSurvey();
+      const sut = makeSut();
+      const surveyResult = await sut.loadBySurveyId(survey.id);
+      expect(surveyResult).toBeNull();
+    });
+
     it('Should update survey result if its not new', async () => {
       const survey = await makeSurvey();
       const account = await makeAccount();
