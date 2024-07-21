@@ -3,6 +3,7 @@ import {
   SaveSurveyResultParams,
   SurveyResultModel,
   SaveSurveyResultRepository,
+  LoadSurveyResultRepository,
 } from './db-save-survey-result-protocols';
 import MockDate from 'mockdate';
 
@@ -15,28 +16,61 @@ const makeFakeSurveyResultData = (): SaveSurveyResultParams => ({
   date: new Date(),
 });
 
-const makeFakeSurveyResult = (): SurveyResultModel =>
-  Object.assign({}, makeFakeSurveyResultData(), {
-    id: 'any_id',
-  });
+const makeFakeSurveyResult = (): SurveyResultModel => ({
+  surveyId: 'any_surveyId',
+  question: 'any_question',
+  answers: [
+    {
+      answer: 'any_answer',
+      count: 1,
+      percent: 20,
+    },
+    {
+      answer: 'other_answer',
+      image: 'any_image',
+      count: 10,
+      percent: 80,
+    },
+  ],
+  date: new Date(),
+});
 
 const makeSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
-    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return new Promise((resolve) => resolve(makeFakeSurveyResult()));
+    async save(data: SaveSurveyResultParams): Promise<void> {
+      return new Promise((resolve) => resolve());
     }
   }
   return new SaveSurveyResultRepositoryStub();
 };
+
+const makeLoadSurveyResultRepository = (): LoadSurveyResultRepository => {
+  class LoadSurveyResultRepositoryStub implements LoadSurveyResultRepository {
+    async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
+      return new Promise((resolve) => resolve(makeFakeSurveyResult()));
+    }
+  }
+  return new LoadSurveyResultRepositoryStub();
+};
+
 type SutType = {
   sut: DbSaveSurveyResult;
   saveSurveyResultRepositoryStub: SaveSurveyResultRepository;
+  loadSurveyResultRepositoryStub: LoadSurveyResultRepository;
 };
 
 const makeSut = (): SutType => {
   const saveSurveyResultRepositoryStub = makeSaveSurveyResultRepository();
-  const sut = new DbSaveSurveyResult(saveSurveyResultRepositoryStub);
-  return { sut, saveSurveyResultRepositoryStub };
+  const loadSurveyResultRepositoryStub = makeLoadSurveyResultRepository();
+  const sut = new DbSaveSurveyResult(
+    saveSurveyResultRepositoryStub,
+    loadSurveyResultRepositoryStub,
+  );
+  return {
+    sut,
+    saveSurveyResultRepositoryStub,
+    loadSurveyResultRepositoryStub,
+  };
 };
 
 describe('DbSaveSurveyResult Usecase', () => {
@@ -63,7 +97,29 @@ describe('DbSaveSurveyResult Usecase', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error())),
       );
-    const promise = sut.save(makeFakeSurveyResult());
+    const promise = sut.save(makeFakeSurveyResultData());
+    await expect(promise).rejects.toThrow();
+  });
+
+  it('Should call LoadSurveyResultRepository with correct values', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut();
+    const loadBySurveyIdSpy = jest.spyOn(
+      loadSurveyResultRepositoryStub,
+      'loadBySurveyId',
+    );
+    const surveyResultData = makeFakeSurveyResultData();
+    await sut.save(surveyResultData);
+    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyResultData.surveyId);
+  });
+
+  it('Should throw if LoadSurveyResultRepository throws', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut();
+    jest
+      .spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      );
+    const promise = sut.save(makeFakeSurveyResultData());
     await expect(promise).rejects.toThrow();
   });
 
