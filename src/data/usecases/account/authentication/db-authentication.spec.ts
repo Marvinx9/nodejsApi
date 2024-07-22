@@ -151,8 +151,9 @@ describe('DbAuthentication UseCase', () => {
 
   it('Should call TokenEncrypter with correct id', async () => {
     const { sut } = makeSut();
-    const accesToken = await sut.auth(makFakeAuthentication());
-    expect(accesToken).toBe('any_token');
+    const { accessToken, name } = await sut.auth(makFakeAuthentication());
+    expect(accessToken).toBe('any_token');
+    expect(name).toBe('any_name');
   });
 
   it('Should call UpdateAccessTokenRepository with correct values', async () => {

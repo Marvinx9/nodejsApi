@@ -6,6 +6,7 @@ import {
 } from './login-controller-protocols';
 import { MissingParamError } from '../../../errors';
 import { LoginController } from './login-controller';
+import { AuthenticationModel } from '../../../../domain/models/authentication';
 import {
   badRequest,
   serverError,
@@ -18,8 +19,12 @@ import {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationParams): Promise<string> {
-      return new Promise((resolve) => resolve('any_token'));
+    async auth(
+      authentication: AuthenticationParams,
+    ): Promise<AuthenticationModel> {
+      return new Promise((resolve) =>
+        resolve({ accessToken: 'any_token', name: 'any_name' }),
+      );
     }
   }
   return new AuthenticationStub();
@@ -87,7 +92,9 @@ describe('Login Controller', () => {
   it('Should return 200 if valid credentials are provided', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeFakeRequest());
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }));
+    expect(httpResponse).toEqual(
+      ok({ accessToken: 'any_token', name: 'any_name' }),
+    );
   });
 
   it('Should call Validation with correct value', async () => {

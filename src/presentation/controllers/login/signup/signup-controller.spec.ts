@@ -19,6 +19,7 @@ import {
   Authentication,
 } from './signup-controller-protocols';
 import { SignUpController } from './signup-controller';
+import { AuthenticationModel } from '../../../../domain/models/authentication';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -34,8 +35,12 @@ const makeaddAccount = (): AddAccount => {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationParams): Promise<string> {
-      return new Promise((resolve) => resolve('any_token'));
+    async auth(
+      authentication: AuthenticationParams,
+    ): Promise<AuthenticationModel> {
+      return new Promise((resolve) =>
+        resolve({ accessToken: 'any_token', name: 'any_name' }),
+      );
     }
   }
   return new AuthenticationStub();
@@ -123,7 +128,9 @@ describe('SignUp Controller', () => {
   it('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeFakeRequest());
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }));
+    expect(httpResponse).toEqual(
+      ok({ accessToken: 'any_token', name: 'any_name' }),
+    );
   });
 
   it('Should call Validation with correct value', async () => {
