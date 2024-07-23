@@ -3,6 +3,8 @@ import { LoadSurveysController } from './load-surveys-controller';
 import { SurveyModel, LoadSurveys } from './load-surveys-controller-protocols';
 import MockDate from 'mockdate';
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const makeFakeSurveys = (): SurveyModel[] => {
   return [
     {
@@ -32,7 +34,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
 
 const makeLoadSurveys = (): LoadSurveys => {
   class LoadSurveysStub implements LoadSurveys {
-    async load(): Promise<SurveyModel[]> {
+    async load(accountId: string): Promise<SurveyModel[]> {
       return new Promise((resolve) => resolve(makeFakeSurveys()));
     }
   }
@@ -58,16 +60,16 @@ describe('LoadSurveys Controller', () => {
     MockDate.reset();
   });
 
-  it('Should call LoadSurveys', async () => {
+  it('Should call LoadSurveys with correct value', async () => {
     const { sut, loadSurveysStub } = makeSut();
     const loadSpy = jest.spyOn(loadSurveysStub, 'load');
-    await sut.handle({});
-    expect(loadSpy).toHaveBeenCalled();
+    await sut.handle({ accountId: 'any_accountId' });
+    expect(loadSpy).toHaveBeenCalledWith('any_accountId');
   });
 
   it('Should return 200 on success', async () => {
     const { sut } = makeSut();
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle({ accountId: 'any_accountId' });
     expect(httpResponse).toEqual(ok(makeFakeSurveys()));
   });
 
@@ -76,7 +78,7 @@ describe('LoadSurveys Controller', () => {
     jest
       .spyOn(loadSurveysStub, 'load')
       .mockReturnValueOnce(new Promise((resolve) => resolve([])));
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle({ accountId: 'any_accountId' });
     expect(httpResponse).toEqual(noContent());
   });
 
@@ -87,7 +89,7 @@ describe('LoadSurveys Controller', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error())),
       );
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle({ accountId: 'any_accountId' });
     expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
