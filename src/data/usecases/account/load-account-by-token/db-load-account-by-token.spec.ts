@@ -98,7 +98,7 @@ describe('DbLoadAccountByToken Usecase', () => {
       .mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error())),
       );
-    const promise = sut.load('any_token', 'any_role');
-    await expect(promise).rejects.toThrow();
+    const account = await sut.load('any_token', 'any_role');
+    await expect(account).toBeNull();
   });
 });
