@@ -18,12 +18,14 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
       answer: 'any_answer',
       count: 0,
       percent: 0,
+      isCurrentAccountAnswer: false,
     },
     {
       answer: 'other_answer',
       image: 'any_image',
       count: 0,
       percent: 0,
+      isCurrentAccountAnswer: false,
     },
   ],
   date: new Date(),
@@ -48,7 +50,10 @@ const makeFakeSurvey = (): SurveyModel => {
 
 const makeLoadSurveyResultRepository = (): LoadSurveyResultRepository => {
   class LoadSurveyResultRepositoryStub implements LoadSurveyResultRepository {
-    async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
+    async loadBySurveyId(
+      surveyId: string,
+      accountId: string,
+    ): Promise<SurveyResultModel> {
       return new Promise((resolve) => resolve(makeFakeSurveyResult()));
     }
   }
@@ -89,14 +94,17 @@ describe('DbSaveSurveyResult Usecase', () => {
     MockDate.reset();
   });
   describe('DbLoadSurveyResult UseCase', () => {
-    it('Should call LoadSurveyResultRepository', async () => {
+    it('Should call LoadSurveyResultRepository with correct values', async () => {
       const { sut, loadSurveyResultRepositoryStub } = makeSut();
       const loadSurveyByIdSpy = jest.spyOn(
         loadSurveyResultRepositoryStub,
         'loadBySurveyId',
       );
-      await sut.load('any_survey_id');
-      expect(loadSurveyByIdSpy).toHaveBeenCalledWith('any_survey_id');
+      await sut.load('any_survey_id', 'any_accountId');
+      expect(loadSurveyByIdSpy).toHaveBeenCalledWith(
+        'any_survey_id',
+        'any_accountId',
+      );
     });
 
     it('Should throw if SaveSurveyResultRepository throws', async () => {
@@ -106,7 +114,7 @@ describe('DbSaveSurveyResult Usecase', () => {
         .mockReturnValueOnce(
           new Promise((resolve, reject) => reject(new Error())),
         );
-      const promise = sut.load('any_survey_id');
+      const promise = sut.load('any_survey_id', 'any_accountId');
       await expect(promise).rejects.toThrow();
     });
 
@@ -120,7 +128,7 @@ describe('DbSaveSurveyResult Usecase', () => {
       jest
         .spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId')
         .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
-      await sut.load('any_survey_id');
+      await sut.load('any_survey_id', 'any_accountId');
       expect(loadByIdSpy).toHaveBeenCalledWith('any_survey_id');
     });
 
@@ -129,13 +137,13 @@ describe('DbSaveSurveyResult Usecase', () => {
       jest
         .spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId')
         .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
-      const surveyResult = await sut.load('any_survey_id');
+      const surveyResult = await sut.load('any_survey_id', 'any_accountId');
       expect(surveyResult).toEqual(makeFakeSurveyResult());
     });
 
     it('Should return SurveyResultModel on success', async () => {
       const { sut } = makeSut();
-      const surveyResult = await sut.load('any_survey_id');
+      const surveyResult = await sut.load('any_survey_id', 'any_accountId');
       expect(surveyResult).toEqual(makeFakeSurveyResult());
     });
   });

@@ -24,12 +24,14 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
       answer: 'any_answer',
       count: 1,
       percent: 20,
+      isCurrentAccountAnswer: true,
     },
     {
       answer: 'other_answer',
       image: 'any_image',
       count: 10,
       percent: 80,
+      isCurrentAccountAnswer: true,
     },
   ],
   date: new Date(),
@@ -109,7 +111,10 @@ describe('DbSaveSurveyResult Usecase', () => {
     );
     const surveyResultData = makeFakeSurveyResultData();
     await sut.save(surveyResultData);
-    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyResultData.surveyId);
+    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(
+      surveyResultData.surveyId,
+      surveyResultData.accountId,
+    );
   });
 
   it('Should throw if LoadSurveyResultRepository throws', async () => {

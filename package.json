@@ -52,6 +52,7 @@
     "bcrypt": "^5.0.1",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "mongo-round": "^1.0.0",
     "mongodb": "^3.6.4",
     "swagger-ui-express": "^5.0.1",
     "validator": "^13.12.0"

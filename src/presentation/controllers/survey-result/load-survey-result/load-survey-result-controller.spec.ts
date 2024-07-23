@@ -15,6 +15,7 @@ import {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 const makeFakeRequest = (): HttpRequest => ({
+  accountId: 'any_accountId',
   params: {
     surveyId: 'any_id',
   },
@@ -42,12 +43,14 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
       answer: 'any_answer',
       count: 0,
       percent: 0,
+      isCurrentAccountAnswer: true,
     },
     {
       answer: 'other_answer',
       image: 'any_image',
       count: 0,
       percent: 0,
+      isCurrentAccountAnswer: true,
     },
   ],
   date: new Date(),
@@ -63,7 +66,10 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 
 const makeLoadSurveyResult = (): LoadSurveyResult => {
   class LoadSurveyResultStub implements LoadSurveyResult {
-    async load(surveyId: string): Promise<SurveyResultModel> {
+    async load(
+      surveyId: string,
+      accountId: string,
+    ): Promise<SurveyResultModel> {
       return new Promise((resolve) => resolve(makeFakeSurveyResult()));
     }
   }
@@ -122,11 +128,11 @@ describe('LoadSurveyResult Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()));
   });
 
-  it('Should call LoadSurveyResult with correct value', async () => {
+  it('Should call LoadSurveyResult with correct values', async () => {
     const { sut, loadSurveyResultStub } = makeSut();
     const loadSpy = jest.spyOn(loadSurveyResultStub, 'load');
     await sut.handle(makeFakeRequest());
-    expect(loadSpy).toHaveBeenCalledWith('any_id');
+    expect(loadSpy).toHaveBeenCalledWith('any_id', 'any_accountId');
   });
 
   it('Should return 500 if LoadSurveyResult throws', async () => {

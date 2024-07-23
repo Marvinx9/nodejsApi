@@ -1,6 +1,7 @@
 import { LoadSurveyResultRepository } from '../../../../data/usecases/survey-result/load-survey-result/db-load-survey-result-protocols';
 import { MongoHelper, QueryBuilder } from '../helpers';
 import { ObjectId } from 'mongodb';
+import round from 'mongo-round';
 import {
   SaveSurveyResultParams,
   SaveSurveyResultRepository,
@@ -30,7 +31,10 @@ export class SurveyResultMongoRepository
     );
   }
 
-  async loadBySurveyId(surveyId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId(
+    surveyId: string,
+    accountId: string,
+  ): Promise<SurveyResultModel> {
     const surveyResultCollection =
       await MongoHelper.getCollection('surveyResults');
     const query = new QueryBuilder()
@@ -69,6 +73,15 @@ export class SurveyResultMongoRepository
         },
         count: {
           $sum: 1,
+        },
+        currentAccountAnswer: {
+          $push: {
+            $cond: [
+              { $eq: ['$data.accountId', accountId] },
+              '$data.answer',
+              null,
+            ],
+          },
         },
       })
       .project({
@@ -109,7 +122,7 @@ export class SurveyResultMongoRepository
                       else: 0,
                     },
                   },
-                  isCurrentAccountAnswerCount: {
+                  isCurrentAccountAnswer: {
                     $cond: [
                       {
                         $eq: [
@@ -164,6 +177,7 @@ export class SurveyResultMongoRepository
           date: '$date',
           answer: '$answers.answer',
           image: '$answers.image',
+          isCurrentAccountAnswer: '$answers.isCurrentAccountAnswer',
         },
         count: {
           $sum: '$answers.count',
@@ -171,8 +185,8 @@ export class SurveyResultMongoRepository
         percent: {
           $sum: '$answers.percent',
         },
-        isCurrentAccountAnswerCount: {
-          $sum: '$answers.isCurrentAccountAnswerCount',
+        isCurrentAccountAnswer: {
+          $sum: '$answers.isCurrentAccountAnswer',
         },
       })
       .project({
@@ -183,8 +197,9 @@ export class SurveyResultMongoRepository
         answer: {
           answer: '$_id.answer',
           image: '$_id.image',
-          count: '$count',
-          percent: '$percent',
+          count: round('$count'),
+          percent: round('$percent'),
+          isCurrentAccountAnswer: '$_id.isCurrentAccountAnswer',
         },
       })
       .sort({
