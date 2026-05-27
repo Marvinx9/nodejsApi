@@ -11,7 +11,7 @@ export const surveyPath = {
       200: {
         description: 'Sucesso',
         content: {
-          'aplication/json': {
+          'application/json': {
             schema: {
               $ref: '#/schemas/surveys',
             },
@@ -40,7 +40,7 @@ export const surveyPath = {
     summary: 'API para criar uma enquete',
     requestBody: {
       content: {
-        'aplication/json': {
+        'application/json': {
           schema: {
             $ref: '#/schemas/addSurveyParams',
           },
