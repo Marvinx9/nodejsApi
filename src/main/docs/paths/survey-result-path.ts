@@ -22,7 +22,7 @@ export const surveyResultPath = {
     requestBody: {
       required: true,
       content: {
-        'aplication/json': {
+        'application/json': {
           schema: {
             $ref: '#/schemas/saveSurveyParams',
           },
@@ -33,7 +33,7 @@ export const surveyResultPath = {
       200: {
         description: 'Sucesso',
         content: {
-          'aplication/json': {
+          'application/json': {
             schema: {
               $ref: '#/schemas/surveyResult',
             },
@@ -76,7 +76,7 @@ export const surveyResultPath = {
       200: {
         description: 'Sucesso',
         content: {
-          'aplication/json': {
+          'application/json': {
             schema: {
               $ref: '#/schemas/surveyResult',
             },

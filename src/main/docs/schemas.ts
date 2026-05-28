@@ -18,7 +18,7 @@ export default {
   surveys: surveySchema,
   survey: surveyAnswerSchema,
   surveyAnswer: surveyAnswerSchema,
-  addSurveyParam: addSurveyParamsSchema,
+  addSurveyParams: addSurveyParamsSchema,
   saveSurveyParams: saveSurveyParamsSchema,
   surveyResult: surveyResultSchema,
   surveyResultAnswer: surveyResultAnswerSchema,

@@ -6,7 +6,7 @@ export const signupPath = {
     requestBody: {
       required: true,
       content: {
-        'aplication/json': {
+        'application/json': {
           schema: {
             $ref: '#/schemas/signUpParams',
           },
@@ -17,7 +17,7 @@ export const signupPath = {
       200: {
         description: 'Sucesso',
         content: {
-          'aplication/json': {
+          'application/json': {
             schema: {
               $ref: '#/schemas/account',
             },
