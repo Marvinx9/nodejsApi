@@ -34,7 +34,7 @@ export class SurveyResultMongoRepository
   async loadBySurveyId(
     surveyId: string,
     accountId: string,
-  ): Promise<SurveyResultModel> {
+  ): Promise<SurveyResultModel | null> {
     const surveyResultCollection =
       await MongoHelper.getCollection('surveyResults');
     const query = new QueryBuilder()
@@ -177,7 +177,6 @@ export class SurveyResultMongoRepository
           date: '$date',
           answer: '$answers.answer',
           image: '$answers.image',
-          isCurrentAccountAnswer: '$answers.isCurrentAccountAnswer',
         },
         count: {
           $sum: '$answers.count',
@@ -186,7 +185,7 @@ export class SurveyResultMongoRepository
           $sum: '$answers.percent',
         },
         isCurrentAccountAnswer: {
-          $sum: '$answers.isCurrentAccountAnswer',
+          $max: '$answers.isCurrentAccountAnswer',
         },
       })
       .project({
@@ -199,7 +198,7 @@ export class SurveyResultMongoRepository
           image: '$_id.image',
           count: round('$count'),
           percent: round('$percent'),
-          isCurrentAccountAnswer: '$_id.isCurrentAccountAnswer',
+          isCurrentAccountAnswer: '$isCurrentAccountAnswer',
         },
       })
       .sort({

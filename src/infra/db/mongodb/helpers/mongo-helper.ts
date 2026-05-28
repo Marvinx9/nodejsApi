@@ -1,5 +1,7 @@
 import { MongoClient, Collection } from 'mongodb';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 export const MongoHelper = {
   client: null as MongoClient,
   uri: null as string,

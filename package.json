@@ -1,5 +1,5 @@
 {
-  "name": "nodejscourse",
+  "name": "enquete-quero",
   "version": "2.1.0",
   "main": "index.js",
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "postbuild": "copyfiles -u 1 public/**/* dist/static",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "up": "npm run build && docker-compose up -d",
+    "up": "npm run build && docker-compose up --build",
     "down": "docker-compose down",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
@@ -17,7 +17,7 @@
     "prepare": "husky install"
   },
   "keywords": [],
-  "author": "",
+  "author": "Afrânio Nunes Dantas",
   "license": "ISC",
   "description": "",
   "devDependencies": {
