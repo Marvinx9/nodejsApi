@@ -6,8 +6,9 @@ services:
     restart: always
     volumes:
       - ./data:/data/db
-    ports:
-      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
   mongo-express:
     container_name: mongo_express_container
     image: mongo-express
@@ -15,10 +16,9 @@ services:
     ports:
       - '8081:8081'
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_PORT=27017
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - ME_CONFIG_MONGODB_URL=${ME_CONFIG_MONGODB_URL}
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
     depends_on:
       - mongo
     links:
@@ -30,10 +30,12 @@ services:
     restart: always
     command: npm start
     environment:
-      - MONGO_URL=mongodb://mongo:27017/clean-node-api
+      - MONGO_URL=${MONGO_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=${PORT}
     volumes:
       - ./dist:/usr/src/nodejs-api/dist
     ports:
-      - '8080:8080'
+      - '${PORT}:${PORT}'
     links:
       - mongo
