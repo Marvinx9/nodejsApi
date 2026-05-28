@@ -8,4 +8,7 @@ MongoHelper.connect(env.mongoUrl)
       console.log(`Server running on port ${env.port}`),
     );
   })
-  .catch(console.error);
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
