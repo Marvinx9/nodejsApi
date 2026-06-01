@@ -1,13 +1,12 @@
 {
-    "compilerOptions": {
-        "outDir": "dist",
-        "module": "CommonJS",
-        "target": "ES2019",
-        "esModuleInterop": true,
-        "rootDir": "src"
-    },
-    "include": [
-      "src"
-    ],
-    "exclude": []
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "CommonJS",
+    "target": "ES2019",
+    "esModuleInterop": true,
+    "rootDir": "src",
+    "types": ["jest"]
+  },
+  "include": ["src"],
+  "exclude": []
 }
