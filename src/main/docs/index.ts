@@ -5,9 +5,9 @@ import schemas from './schemas';
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Clean Node API',
+    title: 'Enquete Quero API',
     description: 'API de enquetes',
-    version: '1.0.0',
+    version: '2.0.0',
   },
   license: {
     name: 'GPL-3.0-or-later',
@@ -24,6 +24,9 @@ export default {
     },
     {
       name: 'Enquete',
+    },
+    {
+      name: 'Categoria',
     },
   ],
   paths,
