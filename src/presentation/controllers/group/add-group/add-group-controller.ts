@@ -1,5 +1,7 @@
+import { NameInUseError } from '../../../errors';
 import {
   badRequest,
+  forbidden,
   noContent,
   serverError,
 } from '../../../helpers/http/http-helper';
@@ -23,7 +25,10 @@ export class AddGroupController implements Controller {
       if (error) return badRequest(error);
 
       const { name, image } = httpRequest.body;
-      await this.addGroup.add({ name, image, date: new Date() });
+      const group = await this.addGroup.add({ name, image, date: new Date() });
+      if (!group) {
+        return forbidden(new NameInUseError());
+      }
       return noContent();
     } catch (error) {
       return serverError(error);

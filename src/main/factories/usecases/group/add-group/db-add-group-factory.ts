@@ -4,5 +4,5 @@ import { GroupMongoRepository } from '../../../../../infra/db/mongodb/group/grou
 
 export const makeDbAddGroup = (): AddGroup => {
   const groupMongoRepository = new GroupMongoRepository();
-  return new DbAddGroup(groupMongoRepository);
+  return new DbAddGroup(groupMongoRepository, groupMongoRepository);
 };
