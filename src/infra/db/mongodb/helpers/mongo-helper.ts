@@ -3,8 +3,8 @@ import { MongoClient, Collection } from 'mongodb';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const MongoHelper = {
-  client: null as MongoClient,
-  uri: null as string,
+  client: null as MongoClient | null,
+  uri: undefined as string | undefined,
 
   async connect(uri: string | undefined): Promise<void> {
     this.uri = uri;
@@ -20,7 +20,7 @@ export const MongoHelper = {
   },
 
   async getCollection(name: string): Promise<Collection> {
-    if (!this.client?.isConnected()) {
+    if (!this.client) {
       await this.connect(this.uri);
     }
     return this.client.db().collection(name);
