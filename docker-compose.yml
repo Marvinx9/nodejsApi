@@ -32,8 +32,6 @@ services:
       - MONGO_URL=${MONGO_URL}
       - JWT_SECRET=${JWT_SECRET}
       - PORT=${PORT}
-    volumes:
-      - ./dist:/usr/src/nodejs-api/dist
     ports:
       - '${PORT}:${PORT}'
     links:
