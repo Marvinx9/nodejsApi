@@ -1,6 +1,8 @@
 import MockDate from 'mockdate';
 import { AddGroupParams, AddGroupRepository } from './db-add-group-protocols';
 import { DbAddGroup } from './db-add-group';
+import { GroupModel } from '../../../../domain/models/group';
+import { LoadGroupByNameRepository } from '../../../protocols/db/group/load-group-by-name-repository';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -10,24 +12,45 @@ const makeFakeGroupData = (): AddGroupParams => ({
   date: new Date(),
 });
 
+const makeFakeGroup = (): GroupModel => ({
+  id: 'valid_id',
+  name: 'valid_name',
+  image: 'valid_url',
+  date: new Date(),
+});
+
 const makeAddGroupRepository = (): AddGroupRepository => {
   class AddGroupRepositoryStub implements AddGroupRepository {
-    async add(surveyData: AddGroupParams): Promise<void> {
-      return new Promise((resolve) => resolve());
+    async add(surveyData: AddGroupParams): Promise<GroupModel> {
+      return new Promise((resolve) => resolve(makeFakeGroup()));
     }
   }
   return new AddGroupRepositoryStub();
 };
 
+const makeLoadGroupByNameRepository = (): LoadGroupByNameRepository => {
+  class LoadGroupByNameRepositoryStub implements LoadGroupByNameRepository {
+    async loadByName(name: string): Promise<GroupModel | null> {
+      return new Promise((resolve) => resolve(null));
+    }
+  }
+  return new LoadGroupByNameRepositoryStub();
+};
+
 type SutType = {
+  loadGroupByNameRepositoryStub: LoadGroupByNameRepository;
   addGroupRepositoryStub: AddGroupRepository;
   sut: DbAddGroup;
 };
 
 const makeSut = (): SutType => {
+  const loadGroupByNameRepositoryStub = makeLoadGroupByNameRepository();
   const addGroupRepositoryStub = makeAddGroupRepository();
-  const sut = new DbAddGroup(addGroupRepositoryStub);
-  return { sut, addGroupRepositoryStub };
+  const sut = new DbAddGroup(
+    loadGroupByNameRepositoryStub,
+    addGroupRepositoryStub,
+  );
+  return { sut, loadGroupByNameRepositoryStub, addGroupRepositoryStub };
 };
 
 describe('DBAddGroup Usecase', () => {
