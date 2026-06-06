@@ -8,10 +8,11 @@ O objetivo do projeto é mostrar uma API com uma arquitetura bem definida e desa
 
 1. [Cadastro](./requirements/signup.md)
 2. [Login](./requirements/login.md)
-3. [Criar enquete](./requirements/add-survey.md)
-4. [Listar enquetes](./requirements/load-surveys.md)
-5. [Responder enquete](./requirements/save-survey-result.md)
-6. [Resultado da enquete](./requirements/load-survey-result.md)
+3. [Criar categoria](./requirementsc/add-categoria.md)
+4. [Criar enquete](./requirements/add-survey.md)
+5. [Listar enquetes](./requirements/load-surveys.md)
+6. [Responder enquete](./requirements/save-survey-result.md)
+7. [Resultado da enquete](./requirements/load-survey-result.md)
 
 ### Princípios
 
