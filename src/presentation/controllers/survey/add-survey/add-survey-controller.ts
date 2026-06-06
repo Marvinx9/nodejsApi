@@ -22,9 +22,10 @@ export class AddSurveyController implements Controller {
       if (error) {
         return badRequest(error);
       }
-      const { question, answers } = httpRequest.body;
+      const { question, groupId, answers } = httpRequest.body;
       await this.addSurvey.add({
         question,
+        groupId,
         answers,
         date: new Date(),
       });

@@ -4,9 +4,9 @@ export type SurveyModel = {
   answers: SurveyAnswerModel[];
   date: Date;
   didAnswer?: boolean;
+  groupId: string;
 };
 
 type SurveyAnswerModel = {
-  image?: string;
   answer: string;
 };
