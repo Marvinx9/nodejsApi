@@ -10,9 +10,9 @@ const makeFakeSurveys = (): SurveyModel[] => {
     {
       id: 'any_id',
       question: 'any_question',
+      groupId: 'any_group_id',
       answers: [
         {
-          image: 'any_image',
           answer: 'any_answer',
         },
       ],
@@ -21,9 +21,9 @@ const makeFakeSurveys = (): SurveyModel[] => {
     {
       id: 'other_id',
       question: 'other_question',
+      groupId: 'other_group_id',
       answers: [
         {
-          image: 'other_image',
           answer: 'other_answer',
         },
       ],

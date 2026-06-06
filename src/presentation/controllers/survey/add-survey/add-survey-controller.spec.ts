@@ -18,9 +18,9 @@ import MockDate from 'mockdate';
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     question: 'any_value',
+    groupId: 'any_group_id',
     answers: [
       {
-        image: 'any_image',
         answer: 'any_answer',
       },
     ],

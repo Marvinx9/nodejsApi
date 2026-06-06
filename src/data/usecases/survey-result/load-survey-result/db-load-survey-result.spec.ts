@@ -22,7 +22,6 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
     },
     {
       answer: 'other_answer',
-      image: 'any_image',
       count: 0,
       percent: 0,
       isCurrentAccountAnswer: false,
@@ -35,13 +34,13 @@ const makeFakeSurvey = (): SurveyModel => {
   return {
     id: 'any_id',
     question: 'any_question',
+    groupId: 'any_group_id',
     answers: [
       {
         answer: 'any_answer',
       },
       {
         answer: 'other_answer',
-        image: 'any_image',
       },
     ],
     date: new Date(),

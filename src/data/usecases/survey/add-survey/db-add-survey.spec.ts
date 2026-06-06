@@ -9,9 +9,9 @@ import MockDate from 'mockdate';
 
 const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
+  groupId: 'any_group_id',
   answers: [
     {
-      image: 'any_image',
       answer: 'any_answer',
     },
   ],
