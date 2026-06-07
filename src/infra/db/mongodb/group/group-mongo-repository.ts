@@ -20,7 +20,9 @@ export class GroupMongoRepository
 
   async loadByName(name: string): Promise<GroupModel | null> {
     const groupCollection = await MongoHelper.getCollection('groups');
-    const group = await groupCollection.findOne({ name });
+    const group = await groupCollection.findOne({
+      name: { $regex: new RegExp(`^${name}$`, 'i') },
+    });
     return group && MongoHelper.map(group);
   }
 
