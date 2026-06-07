@@ -15,6 +15,11 @@ const makeFakeSurveyData = (): AddSurveyParams => ({
   answers: [
     {
       answer: 'any_answer',
+      isCorrectAnswer: true,
+    },
+    {
+      answer: 'other_answer',
+      isCorrectAnswer: false,
     },
   ],
   date: new Date(),
@@ -54,7 +59,10 @@ type SutType = {
 const makeSut = (): SutType => {
   const addSurveyRepositoryStub = makeAddSurveyRepository();
   const loadGroupByIdRepositoryStub = makeLoadGroupByIdRepository();
-  const sut = new DbAddSurvey(addSurveyRepositoryStub, loadGroupByIdRepositoryStub);
+  const sut = new DbAddSurvey(
+    addSurveyRepositoryStub,
+    loadGroupByIdRepositoryStub,
+  );
   return { sut, addSurveyRepositoryStub, loadGroupByIdRepositoryStub };
 };
 
@@ -84,7 +92,8 @@ describe('DbAddSurvey Usecase', () => {
   });
 
   it('Should not call AddSurveyRepository if group does not exist', async () => {
-    const { sut, addSurveyRepositoryStub, loadGroupByIdRepositoryStub } = makeSut();
+    const { sut, addSurveyRepositoryStub, loadGroupByIdRepositoryStub } =
+      makeSut();
     jest
       .spyOn(loadGroupByIdRepositoryStub, 'loadById')
       .mockReturnValueOnce(new Promise((resolve) => resolve(null)));

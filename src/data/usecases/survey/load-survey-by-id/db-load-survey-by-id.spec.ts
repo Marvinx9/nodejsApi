@@ -14,6 +14,7 @@ const makeFakeSurvey = (): SurveyModel => {
     answers: [
       {
         answer: 'any_answer',
+        isCorrectAnswer: true,
       },
     ],
     date: new Date(),
