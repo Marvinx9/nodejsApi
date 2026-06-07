@@ -9,4 +9,5 @@ export type SurveyModel = {
 
 type SurveyAnswerModel = {
   answer: string;
+  isCorrectAnswer?: boolean;
 };

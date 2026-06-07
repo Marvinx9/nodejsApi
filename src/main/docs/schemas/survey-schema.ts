@@ -4,6 +4,9 @@ export const surveySchema = {
     id: {
       type: 'string',
     },
+    groupId: {
+      type: 'string',
+    },
     question: {
       type: 'string',
     },

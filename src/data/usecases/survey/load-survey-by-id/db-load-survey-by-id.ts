@@ -9,7 +9,12 @@ export class DbLoadSurveyById implements LoadSurveyById {
     private readonly loadSurveyByIdRepository: LoadSurveyByIdRepository,
   ) {}
 
-  async loadById(id: string): Promise<SurveyModel | null> {
+  async loadById(id: string): Promise<
+    | (Omit<SurveyModel, 'answers'> & {
+        answers: Array<Omit<SurveyModel['answers'][0], 'isCorrectAnswer'>>;
+      })
+    | null
+  > {
     const survey = this.loadSurveyByIdRepository.loadById(id);
     return survey;
   }
