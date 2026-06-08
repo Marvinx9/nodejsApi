@@ -1,8 +1,8 @@
 import { NameInUseError } from '../../../errors';
 import {
   badRequest,
+  created,
   forbidden,
-  noContent,
   serverError,
 } from '../../../helpers/http/http-helper';
 import {
@@ -29,7 +29,7 @@ export class AddGroupController implements Controller {
       if (!group) {
         return forbidden(new NameInUseError());
       }
-      return noContent();
+      return created();
     } catch (error) {
       return serverError(error);
     }
