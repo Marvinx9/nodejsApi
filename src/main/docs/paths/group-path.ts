@@ -17,9 +17,7 @@ export const groupPath = {
       },
     },
     responses: {
-      204: {
-        description: 'Sucesso',
-      },
+      201: {},
       403: {
         $ref: '#/components/forbidden',
       },
