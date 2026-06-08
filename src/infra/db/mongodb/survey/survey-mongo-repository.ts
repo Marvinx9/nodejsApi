@@ -3,6 +3,7 @@ import { LoadSurveyByIdRepository } from '../../../../data/protocols/db/survey/l
 import { LoadSurveysRepository } from '../../../../data/protocols/db/survey/load-surveys-repository';
 import { SurveyModel } from '../../../../domain/models/survey';
 import { AddSurveyParams } from '../../../../domain/usecases/survey/add-survey';
+import { SurveyListItem } from '../../../../domain/usecases/survey/load-surveys';
 import { MongoHelper, QueryBuilder } from '../helpers';
 import { ObjectId } from 'mongodb';
 
@@ -17,9 +18,16 @@ export class SurveyMongoRepository
     await surveyCollection.insertOne(surveyData);
   }
 
-  async loadAll(accountId: string): Promise<SurveyModel[]> {
+  async loadAll(
+    accountId: string,
+    groupId?: string,
+  ): Promise<SurveyListItem[]> {
     const surveyCollection = await MongoHelper.getCollection('surveys');
-    const query = new QueryBuilder()
+    const builder = new QueryBuilder();
+    if (groupId) {
+      builder.match({ groupId });
+    }
+    const query = builder
       .lookup({
         from: 'surveyResults',
         foreignField: 'surveyId',
@@ -31,6 +39,7 @@ export class SurveyMongoRepository
         question: 1,
         answers: 1,
         date: 1,
+        groupId: 1,
         didAnswer: {
           $gte: [
             {
