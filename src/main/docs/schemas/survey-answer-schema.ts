@@ -4,6 +4,9 @@ export const surveyAnswerSchema = {
     answer: {
       type: 'string',
     },
+    isCorrectAnswer: {
+      type: 'boolean',
+    },
   },
-  required: ['answer'],
+  required: ['answer', 'isCorrectAnswer'],
 };

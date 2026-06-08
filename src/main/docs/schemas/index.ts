@@ -10,3 +10,5 @@ export * from './save-survey-params-schema';
 export * from './survey-result-schema';
 export * from './survey-result-answer-schema';
 export * from './add-group-params-schema';
+export * from './group-list-item-schema';
+export * from './groups-schema';

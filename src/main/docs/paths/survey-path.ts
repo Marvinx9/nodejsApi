@@ -6,7 +6,7 @@ export const surveyPath = {
       },
     ],
     tags: ['Enquete'],
-    summary: 'API para listar todas as enquetes',
+    summary: 'API para listar as enquetes',
     parameters: [
       {
         in: 'query',
