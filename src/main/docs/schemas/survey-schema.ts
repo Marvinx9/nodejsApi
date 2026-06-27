@@ -4,6 +4,9 @@ export const surveySchema = {
     id: {
       type: 'string',
     },
+    groupId: {
+      type: 'string',
+    },
     question: {
       type: 'string',
     },
@@ -20,5 +23,5 @@ export const surveySchema = {
       type: 'boolean',
     },
   },
-  required: ['id', 'question', 'answers', 'date', 'didAnswer'],
+  required: ['id', 'groupId', 'question', 'answers', 'date'],
 };

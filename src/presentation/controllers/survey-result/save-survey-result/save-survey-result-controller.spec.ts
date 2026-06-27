@@ -26,9 +26,9 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeFakeSurvey = (): SurveyModel => ({
   id: 'any_id',
   question: 'any_question',
+  groupId: 'any_group_id',
   answers: [
     {
-      image: 'any_image',
       answer: 'any_answer',
     },
   ],
@@ -47,7 +47,6 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
     },
     {
       answer: 'other_answer',
-      image: 'any_image',
       count: 10,
       percent: 80,
       isCurrentAccountAnswer: true,

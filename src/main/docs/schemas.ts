@@ -10,6 +10,8 @@ import {
   surveyResultAnswerSchema,
   errorSchema,
   addGroupParamsSchema,
+  groupListItemSchema,
+  groupsSchema,
 } from './schemas/';
 
 export default {
@@ -17,6 +19,8 @@ export default {
   loginParams: loginParamsSchema,
   signUpParams: signupParamsSchema,
   addGroupParams: addGroupParamsSchema,
+  groups: groupsSchema,
+  groupListItem: groupListItemSchema,
   surveys: surveySchema,
   survey: surveyAnswerSchema,
   surveyAnswer: surveyAnswerSchema,

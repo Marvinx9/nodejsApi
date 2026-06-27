@@ -10,9 +10,9 @@ let accountCollection: Collection;
 
 const makeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
+  groupId: 'any_group_id',
   answers: [
     {
-      image: 'any_image',
       answer: 'any_answer',
     },
     {
@@ -73,7 +73,6 @@ describe('Survey Mongo Repository', () => {
           question: 'any_question',
           answers: [
             {
-              image: 'any_image',
               answer: 'any_answer',
             },
           ],
@@ -83,7 +82,6 @@ describe('Survey Mongo Repository', () => {
           question: 'other_question',
           answers: [
             {
-              image: 'other_image',
               answer: 'other_answer',
             },
           ],
@@ -121,7 +119,6 @@ describe('Survey Mongo Repository', () => {
         question: 'any_question',
         answers: [
           {
-            image: 'any_image',
             answer: 'any_answer',
           },
         ],

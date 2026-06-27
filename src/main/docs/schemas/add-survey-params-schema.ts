@@ -4,6 +4,9 @@ export const addSurveyParamsSchema = {
     question: {
       type: 'string',
     },
+    groupId: {
+      type: 'string',
+    },
     answers: {
       type: 'array',
       items: {

@@ -6,7 +6,19 @@ export const surveyPath = {
       },
     ],
     tags: ['Enquete'],
-    summary: 'API para listar todas as enquetes',
+    summary: 'API para listar as enquetes',
+    parameters: [
+      {
+        in: 'query',
+        name: 'groupId',
+        schema: {
+          type: 'string',
+        },
+        required: false,
+        description:
+          'Filtra enquetes pelo ID do grupo. Se não informado, retorna todas as enquetes.',
+      },
+    ],
     responses: {
       200: {
         description: 'Sucesso',

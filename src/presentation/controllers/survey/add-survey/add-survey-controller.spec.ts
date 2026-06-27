@@ -7,9 +7,11 @@ import {
 import { AddSurveyController } from './add-survey-controller';
 import {
   badRequest,
+  forbidden,
   noContent,
   serverError,
 } from '../../../helpers/http/http-helper';
+import { InvalidParamError } from '../../../errors';
 import MockDate from 'mockdate';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -18,10 +20,11 @@ import MockDate from 'mockdate';
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     question: 'any_value',
+    groupId: 'any_group_id',
     answers: [
       {
-        image: 'any_image',
         answer: 'any_answer',
+        isCorrectAnswer: true,
       },
     ],
     date: new Date(),
@@ -56,8 +59,8 @@ const makeValidation = (): Validation => {
 
 const makeAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
-    async add(data: AddSurveyParams): Promise<void> {
-      return new Promise((resolve) => resolve());
+    async add(data: AddSurveyParams): Promise<boolean> {
+      return new Promise((resolve) => resolve(true));
     }
   }
   return new AddSurveyStub();
@@ -104,6 +107,15 @@ describe('AddSurvey Controller', () => {
       );
     const httpRequest = await sut.handle(makeFakeRequest());
     expect(httpRequest).toEqual(serverError(new Error()));
+  });
+
+  it('Should return 403 if groupId does not exist', async () => {
+    const { sut, addSurveyStub } = makeSut();
+    jest
+      .spyOn(addSurveyStub, 'add')
+      .mockReturnValueOnce(new Promise((resolve) => resolve(false)));
+    const httpResponse = await sut.handle(makeFakeRequest());
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('groupId')));
   });
 
   it('Should return 204 on success', async () => {

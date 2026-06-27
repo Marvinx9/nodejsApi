@@ -58,9 +58,9 @@ describe('Survey Routes', () => {
 
       const res = await surveyCollection.insertOne({
         question: 'question',
+        groupId: 'group_id',
         answers: [
           {
-            image: 'http://image-name.com',
             answer: 'answer 1',
           },
           {
@@ -87,9 +87,9 @@ describe('Survey Routes', () => {
 
       const res = await surveyCollection.insertOne({
         question: 'question',
+        groupId: 'group_id',
         answers: [
           {
-            image: 'http://image-name.com',
             answer: 'answer 1',
           },
           {

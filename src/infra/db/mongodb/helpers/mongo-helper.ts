@@ -7,14 +7,24 @@ export const MongoHelper = {
   uri: undefined as string | undefined,
 
   async connect(uri: string | undefined): Promise<void> {
-    this.uri = uri;
-    this.client = await MongoClient.connect(uri, {
+    const mongoUri =
+      uri || process.env.MONGO_URL || (global as { __MONGO_URI__?: string }).__MONGO_URI__;
+
+    if (!mongoUri) {
+      throw new Error('MongoDB connection URI was not provided');
+    }
+
+    this.uri = mongoUri;
+    this.client = await MongoClient.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
   },
 
   async disconnect(): Promise<void> {
+    if (!this.client) {
+      return;
+    }
     await this.client.close();
     this.client = null;
   },

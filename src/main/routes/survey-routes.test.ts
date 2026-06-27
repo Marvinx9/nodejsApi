@@ -32,9 +32,9 @@ const makeAccessToken = async (): Promise<string> => {
 
 const makeSurveyData = () => ({
   question: 'question',
+  groupId: 'group_id',
   answers: [
     {
-      image: 'http://image-name.com',
       answer: 'answer 1',
     },
     {
@@ -70,9 +70,9 @@ describe('Survey Routes', () => {
 
       await surveyCollection.insertOne({
         question: 'any_question',
+        groupId: 'any_group_id',
         answers: [
           {
-            image: 'any_image',
             answer: 'any_answer',
           },
         ],

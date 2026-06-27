@@ -1,4 +1,5 @@
 import {
+  AtLeastOneCorrectAnswerValidation,
   RequiredFieldValidation,
   ValidationComposite,
 } from '../../../../../validation/validators';
@@ -11,9 +12,10 @@ describe('AddSurveyValidation Factory', () => {
   it('Should call ValidationComposite with all validations', () => {
     makeAddSurveyValidation();
     const validations: Validation[] = [];
-    for (const field of ['question', 'answers']) {
+    for (const field of ['question', 'groupId', 'answers']) {
       validations.push(new RequiredFieldValidation(field));
     }
+    validations.push(new AtLeastOneCorrectAnswerValidation('answers'));
     expect(ValidationComposite).toHaveBeenCalledWith(validations);
   });
 });

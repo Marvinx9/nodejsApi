@@ -22,7 +22,6 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
     },
     {
       answer: 'other_answer',
-      image: 'any_image',
       count: 0,
       percent: 0,
       isCurrentAccountAnswer: false,
@@ -31,17 +30,19 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
   date: new Date(),
 });
 
-const makeFakeSurvey = (): SurveyModel => {
+const makeFakeSurvey = (): Omit<SurveyModel, 'answers'> & {
+  answers: Array<Omit<SurveyModel['answers'][0], 'isCorrectAnswer'>>;
+} => {
   return {
     id: 'any_id',
     question: 'any_question',
+    groupId: 'any_group_id',
     answers: [
       {
         answer: 'any_answer',
       },
       {
         answer: 'other_answer',
-        image: 'any_image',
       },
     ],
     date: new Date(),
@@ -62,7 +63,11 @@ const makeLoadSurveyResultRepository = (): LoadSurveyResultRepository => {
 
 const makeLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
-    async loadById(id: string): Promise<SurveyModel> {
+    async loadById(id: string): Promise<
+      Omit<SurveyModel, 'answers'> & {
+        answers: Array<Omit<SurveyModel['answers'][0], 'isCorrectAnswer'>>;
+      }
+    > {
       return new Promise((resolve) => resolve(makeFakeSurvey()));
     }
   }

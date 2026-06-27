@@ -1,8 +1,10 @@
 import {
   badRequest,
+  forbidden,
   noContent,
   serverError,
 } from '../../../helpers/http/http-helper';
+import { InvalidParamError } from '../../../errors';
 import {
   AddSurvey,
   Controller,
@@ -22,12 +24,14 @@ export class AddSurveyController implements Controller {
       if (error) {
         return badRequest(error);
       }
-      const { question, answers } = httpRequest.body;
-      await this.addSurvey.add({
+      const { question, groupId, answers } = httpRequest.body;
+      const success = await this.addSurvey.add({
         question,
+        groupId,
         answers,
         date: new Date(),
       });
+      if (!success) return forbidden(new InvalidParamError('groupId'));
       return noContent();
     } catch (error) {
       return serverError(error);

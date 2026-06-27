@@ -10,10 +10,11 @@ const makeFakeSurvey = (): SurveyModel => {
   return {
     id: 'any_id',
     question: 'any_question',
+    groupId: 'any_group_id',
     answers: [
       {
-        image: 'any_image',
         answer: 'any_answer',
+        isCorrectAnswer: true,
       },
     ],
     date: new Date(),
